@@ -30,7 +30,6 @@ export class EncryptionInterceptor implements HttpInterceptor {
                 headers: request.headers.set('X-Encrypted-Request', 'true')
             });
 
-            // Thêm các headers từ service vào request
             if (headers) {
                 Object.keys(headers).forEach(key => {
                     modifiedRequest = modifiedRequest.clone({
