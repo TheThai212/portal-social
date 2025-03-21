@@ -22,11 +22,24 @@ export class EncryptionInterceptor implements HttpInterceptor {
         }
 
         if (request.body) {
-            const encryptedBody = this.encryptionService.encryptPayload(request.body);
-            request = request.clone({
-                body: encryptedBody,
+            const { data, headers } = this.encryptionService.encryptPayload(request.body);
+            console.log(data);
+            console.log(request.body);
+            let modifiedRequest = request.clone({
+                body: {dataJson: data},
                 headers: request.headers.set('X-Encrypted-Request', 'true')
             });
+
+            // Thêm các headers từ service vào request
+            if (headers) {
+                Object.keys(headers).forEach(key => {
+                    modifiedRequest = modifiedRequest.clone({
+                        headers: modifiedRequest.headers.set(key, headers[key])
+                    });
+                });
+            }
+
+            request = modifiedRequest;
         }
 
         return next.handle(request);

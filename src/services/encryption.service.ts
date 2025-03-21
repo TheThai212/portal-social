@@ -12,37 +12,32 @@ export class EncryptionService {
 
     private publicKey: string;
     private privateKey: string;
-
     private jsEncrypt: JSEncrypt;
     private aesKey: string;
-    plainText: string = ''; // Plaintext
-    cypherText: string = '123'; // Encrypted ciphertext
-    $encrypt: any; // JSEncrypt Instance
 
+    // plainText: string = ''; // Plaintext
+    cypherText: string = '123'; // Encrypted ciphertext
+    // $encrypt: any; // JSEncrypt Instance
 
     constructor(private http: HttpClient) {
         this.jsEncrypt = new JSEncrypt();
         this.initializeEncryption();
 
+        // const key = CryptoJS.enc.Hex.parse("8b246378ed02ac26c4e1d02928bee70d5ade2471ac34c2f0a23131c838de5f79");
+        // const iv = CryptoJS.enc.Hex.parse("9bbdd6c68d3df3adfb062c8f0ec2c677");
 
-        const key = CryptoJS.enc.Hex.parse("8b246378ed02ac26c4e1d02928bee70d5ade2471ac34c2f0a23131c838de5f79");
-        const iv = CryptoJS.enc.Hex.parse("9bbdd6c68d3df3adfb062c8f0ec2c677");
-
-        const encrypted = CryptoJS.AES.encrypt("Hello, World!", key, {
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7,
-            iv: iv
-        });
+        // const encrypted = CryptoJS.AES.encrypt("Hello, World!", key, {
+        //     mode: CryptoJS.mode.CBC,
+        //     padding: CryptoJS.pad.Pkcs7,
+        //     iv: iv
+        // });
 
 
-        const encryptedJson = CryptoJS.AES.encrypt(`{"post_url":"123"}`, key, {
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7,
-            iv: iv
-        });
-
-        console.log(encrypted.toString()); // Chuỗi Base64 đã mã hóa
-        console.log(`encryptedJson`, encryptedJson.toString()); // Chuỗi Base64 đã mã hóa
+        // const encryptedJson = CryptoJS.AES.encrypt(`{"post_url":"123"}`, key, {
+        //     mode: CryptoJS.mode.CBC,
+        //     padding: CryptoJS.pad.Pkcs7,
+        //     iv: iv
+        // });
 
     }
 
@@ -132,72 +127,31 @@ export class EncryptionService {
     }
 
     private generateIV(): string {
-        // Tạo IV ngẫu nhiên 16 bytes
-
-        return '9bbdd6c68d3df3adfb062c8f0ec2c677';
+        // return '9bbdd6c68d3df3adfb062c8f0ec2c677';
         return CryptoJS.lib.WordArray.random(16).toString();
     }
 
     public encryptPayload(data: any): any {
         try {
-            const iv = this.generateIV();
+            const jsonStr = JSON.stringify({ dataJson: data });
+            const key = CryptoJS.enc.Hex.parse(this.aesKey);
+            const iv = CryptoJS.enc.Hex.parse(this.generateIV());
 
-    //         const jsonText = JSON.stringify(data);
+            const encrypted = CryptoJS.AES.encrypt(jsonStr, key, {
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7,
+                iv: iv
+            });
 
-    // // Chuyển IV từ string sang WordArray
-    // const ivWordArray = CryptoJS.enc.Hex.parse(iv);
-
-    // // Chuyển key thành WordArray
-    // const keyWordArray = CryptoJS.enc.Utf8.parse(this.aesKey);
-
-    // // Mã hóa dữ liệu
-    // const encrypted = CryptoJS.AES.encrypt(jsonText, keyWordArray, {
-    //   iv: ivWordArray,
-    //   mode: CryptoJS.mode.CBC,
-    //   padding: CryptoJS.pad.Pkcs7
-    // });
-
-
-    const jsonStr = JSON.stringify(data);
-
-    const key = CryptoJS.enc.Hex.parse(this.aesKey);
-    const ivParams = CryptoJS.enc.Hex.parse(iv);
-
-    const encrypted = CryptoJS.AES.encrypt(jsonStr, key, {
-      iv: ivParams,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
-    });
-
-
-    console.log(data.post_url);
-    const key2 = CryptoJS.enc.Hex.parse("8b246378ed02ac26c4e1d02928bee70d5ade2471ac34c2f0a23131c838de5f79");
-    const iv2 = CryptoJS.enc.Hex.parse("9bbdd6c68d3df3adfb062c8f0ec2c677");
-    const encryptedJson = CryptoJS.AES.encrypt(data, key2, {
-
-    // const encryptedJson = CryptoJS.AES.encrypt(`{"post_url":"123"}`, key2, {
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7,
-        iv: iv2
-    });
-
-            console.log(`encryptedJson`, encryptedJson.toString()); // Chuỗi Base64 đã mã hóa
-            console.log(JSON.stringify(data));
-
-            console.log(btoa(data));
-            console.log(atob(btoa(data)));
-
-            const decryptedData = CryptoJS.AES.decrypt(encrypted.toString(), this.aesKey);
+            const encryptedKey = this.jsEncrypt.encrypt(this.aesKey);
 
             return {
-                data: encryptedJson.toString(),
-                iv: iv2,  // Thêm IV vào response
-                // aesKey: this.aesKey,
-                key: this.jsEncrypt.encrypt(this.aesKey)                ,
-                // btoa: btoa(data),
-                // encryptedStrBase64en: (decryptedData.toString(CryptoJS.enc.Utf8)),
-                // encryptedStr: atob(decryptedData.toString(CryptoJS.enc.Utf8)),
-                // decryptedData: this.decryptPayload(encrypted.toString(), this.aesKey, iv)
+                data: encrypted.toString(),
+                headers: {
+                    'X-Encrypt': encryptedKey,
+                    'X-Key': this.aesKey,
+                    'X-IV': iv.toString()
+                }
             };
         } catch (error) {
             console.error('Lỗi mã hóa:', error);
