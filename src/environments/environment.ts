@@ -8,7 +8,7 @@ export const environment = {
     USERDATA_KEY: 'authf649fc9a5f55',
     USERINFO_KEY: 'infof649fc9a5f55',
     isMockEnabled: true,
-    apiUrl: 'http://localhost:8881/api',
+    apiUrl: 'https://localhost:8443',
     appThemeName: 'Metronic',
     facebookAppId: "2280877792330196",
     enableEncryption: true

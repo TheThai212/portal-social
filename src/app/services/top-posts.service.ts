@@ -33,7 +33,7 @@ export class TopPostsService {
     }
 
     createPost(payload: any): Observable<ResponseData> {
-        return this.http.post<ResponseData>(`${this.baseUrl}/facebook-posts`, JSON.stringify(payload))
+        return this.http.post<ResponseData>(`${this.baseUrl}/service-encrypt-v1/customer/customer`, JSON.stringify(payload))
     }
 
     updateRefCode(payload: any, uid: number): Observable<ResponseData> {
