@@ -1,0 +1,38 @@
+<div class="px-7 py-5">
+    <div class="d-flex align-items-center">
+        <div class="symbol symbol-circle symbol-45px">
+            <img [src]="info?.avatar_url" onerror="this.src='./assets/media/avatars/blank.png'" alt="">
+        </div>
+        <div>
+            <span class="fw-semibold fs-lg ms-3">{{info?.name}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="separator border-gray-200"></div>
+
+<div class="px-7 py-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="symbol symbol-circle symbol-45px">
+            <span>Mã giới thiệu:</span>
+        </div>
+        <div>
+            <span class="fw-semibold fs-lg ms-3">{{info?.agency_code}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="separator border-gray-200"></div>
+
+
+<div class="px-7 py-5">
+    <li class="navi-item">
+        <a class="navi-link cursor-pointer">
+            <div class="me-6" (click)="logout()">
+                <i class="fa-solid fa-right-from-bracket me-1 fs-5"></i>
+                <span class="text-gray-700 ms-2 fw-bolder">Đăng xuất</span>
+            </div>
+        </a>
+    </li>
+</div>
+

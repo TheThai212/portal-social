@@ -1,0 +1,29 @@
+<mat-dialog-content>
+    <div class="card-header mb-4">
+        <div class="d-flex justify-content-between">
+            <div class="fw-medium required">
+                Mã giới thiệu
+            </div>
+        </div>
+        <div class="fs-6">
+            Nhập mã giới thiệu để hoàn tất quá trình đăng ký
+        </div>
+
+    </div>
+    <div class="separator border-gray-200"></div>
+    <div class="card-body mt-6">
+        <input
+            type="text"
+            class="form-control form-control-solid px-4 mb-4"
+            name="referral"
+            [(ngModel)]="payload.agency_code"
+            placeholder="Nhập mã giới thiệu của bạn"
+        />
+        <div class="separator border-gray-200"></div>
+        <a class="btn btn-primary w-100 navi-link cursor-pointer mt-4" href="javascript:void(0)" (click)="sendRefCode()">
+            <div class="me-6">
+                <span class="ms-2 fw-semibold">Hoàn tất</span>
+            </div>
+        </a>
+    </div>
+</mat-dialog-content>

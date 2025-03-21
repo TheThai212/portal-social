@@ -1,0 +1,74 @@
+<div class="card-body">
+    <div class="d-flex justify-content-between my-4">
+        <a class="navi-link" href="javascript:void(0)">
+            <div class="me-6">
+                <i class="fa-solid fa-star me-1 fs-5 text-primary"></i>
+                <span class="text-gray-700 ms-2 fw-bolder">Top bài đăng</span>
+            </div>
+        </a>
+        <div class="d-flex align-items-center filter">
+            <span class="filter-text pe-3">Lọc</span>
+            <select
+                name="status"
+                data-control="select2"
+                data-hide-search="true"
+                class="form-select form-select-white form-select-sm w-125px ms-2"
+                [(ngModel)]="topType"
+                (ngModelChange)="loadTopPosts(topType)"
+            >
+                <option [value]="null" selected>Tất cả</option>
+                <option [value]="'like_count'">Top reaction</option>
+                <option [value]="'share_count'">Top share</option>
+            </select>
+        </div>
+    </div>
+    <div class="separator border-gray-200"></div>
+    <div class="row mt-8">
+        @for (post of listPost; track post) {
+            <div class="col-xxl-4 mb-3 cursor-pointer" (click)="openLink(post.post_url)">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-45px me-4 symbol-circle">
+                                <img src="{{post.user.avatar_url}}" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start flex-column">
+                            <span href="#"
+                                  class="text-gray-800 fw-bolder text-hover-primary fs-6">{{post.user.name}}</span>
+                                <span class="text-muted text-muted d-block fs-7">{{post.last_synced_at | transferHour}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-truncate-custom">{{post.description}}</p>
+                        <div class="separator border-gray-200"></div>
+                        <div class="d-flex align-items-center justify-content-between mt-3 gap-6">
+                            <div>
+                                <img src="./assets/media/icons/fb/like.png" alt="" class="w-20px">
+                                <img src="./assets/media/icons/fb/haha.png" alt="" class="w-20px">
+                                <span class="fw-bold ms-1">{{post.like_count | formatNumber }}</span>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-share text-black"></i>
+                                <span class="fw-bold ms-1">{{post.share_count | formatNumber}}</span>
+                            </div>
+<!--                            <div>-->
+<!--                                <img src="./assets/media/icons/fb/wow.png" alt="" class="w-20px">-->
+<!--                                <span class="fw-bold ms-1">124</span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <img src="./assets/media/icons/fb/haha.png" alt="" class="w-20px">-->
+<!--                                <span class="fw-bold ms-1">54</span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <img src="./assets/media/icons/fb/hear.png" alt="" class="w-20px">-->
+<!--                                <span class="fw-bold ms-1">99</span>-->
+<!--                            </div>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

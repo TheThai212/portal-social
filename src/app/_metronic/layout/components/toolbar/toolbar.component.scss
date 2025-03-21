@@ -1,0 +1,16 @@
+.quick-search-box {
+    width: 70%;
+    background: radial-gradient(circle at 100% 100%, #ffffff 0, #ffffff 15px, transparent 15px) 0% 0%/16px 16px no-repeat,
+    radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 15px, transparent 15px) 100% 0%/16px 16px no-repeat,
+    radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 15px, transparent 15px) 0% 100%/16px 16px no-repeat,
+    radial-gradient(circle at 0 0, #ffffff 0, #ffffff 15px, transparent 15px) 100% 100%/16px 16px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 2px) calc(100% - 32px) no-repeat,
+    linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 32px) calc(100% - 2px) no-repeat,
+    linear-gradient(270deg, #a88af9 30%, #6938ef 70%);
+    border-radius: 16px;
+    box-sizing: border-box;
+    //
+    @media (max-width: 450px) {
+        width: 100%;
+    }
+}

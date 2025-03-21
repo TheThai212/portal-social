@@ -1,0 +1,38 @@
+<mat-dialog-content>
+    <div class="card-header mb-3">
+        <div class="d-flex justify-content-between">
+            <div class="fw-medium fs-2">
+                Đăng bài
+            </div>
+            <span matDialogClose class="cursor-pointer">
+                <i class="fa-solid fa-close fs-1"></i>
+            </span>
+        </div>
+
+    </div>
+    <div class="separator border-gray-200"></div>
+
+    <div class="card-body my-3">
+        <div class="mb-4">
+            <label for="link" class="form-label fs-6 fw-semibold mb-3">Nhập link bài đăng Facebook</label>
+            <input type="text" class="form-control form-control-lg" id="link" name="link" placeholder="Nhập link của bạn" [(ngModel)]="data"/>
+        </div>
+        <div class="fs-6">Ví dụ:</div>
+        <div>
+            <ul>
+                <li>
+                    <span class="text-break fs-6">
+                        https://www.facebook.com/nguyenvana.9999/posts/pfbid02DA2KKjUmVdnRjLmses7Q4B6VSbTJuJ8SarFiFSzkGeZdpoMKl?comment_id=10018090&reply_comment_id=4328356582&notif_id=174064822517&notif_t=comment_mention&ref=notif&locale=vi_VN</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="separator border-gray-200"></div>
+    <div class="card-body mt-3">
+        <a class="btn btn-primary w-100 navi-link cursor-pointer" href="javascript:void(0)" (click)="createPost()">
+            <div class="me-6">
+                <span class="ms-2 fw-semibold">Gửi bài đăng</span>
+            </div>
+        </a>
+    </div>
+</mat-dialog-content>

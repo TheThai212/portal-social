@@ -1,0 +1,29 @@
+<div
+    [ngClass]="footerContainerCssClasses"
+    class="
+    d-flex
+    flex-column flex-md-row
+    align-items-center
+    justify-content-center
+  "
+>
+    <!-- begin::Copyright  -->
+    <div class="text-gray-900 order-2 order-md-1 order-sm-1 footer-logo">
+        <img src="./assets/media/logos/vps-logo.png" alt="">
+    </div>
+    <!-- end::Copyright  -->
+
+    <!-- begin::Nav  -->
+    <ul class="menu menu-gray-600 menu-hover-primary fw-medium order-1">
+        <li class="menu-item">
+            <a class="menu-link ps-0 pe-4 cursor-pointer"> Powered by ACCESSTRADE </a>
+        </li>
+<!--        <li class="menu-item">-->
+<!--            <a class="menu-link pe-0 pe-4 cursor-pointer"> Điều khoản sử dụng </a>-->
+<!--        </li>-->
+        <li class="menu-item">
+            <a class="menu-link pe-0 cursor-pointer" routerLink="/privacy-policy"> Chính sách bảo mật </a>
+        </li>
+    </ul>
+    <!-- end::Nav  -->
+</div>

@@ -1,0 +1,10 @@
+.btn-grp {
+    .active {
+        color: #AB6AFF;
+        background-color: #F4F3FF;
+        &:hover {
+            color: #AB6AFF;
+            background-color: #F4F3FF;
+        }
+    }
+}

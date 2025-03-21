@@ -1,0 +1,20 @@
+.step {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+    linear-gradient(106.69deg, rgba(255, 255, 255, 0.6) 1.49%, #F0F0FF 23.17%, rgba(252, 242, 255, 0.18) 48.28%, rgba(255, 252, 247, 0.3) 74.88%, rgba(255, 255, 255, 0.6) 100%);
+    > .card-body {
+        border: 1px solid #BDB4FE;
+        border-radius: 16px;
+        p {
+            height: 60px;
+        }
+    }
+}
+.badge-custom {
+    position: absolute;
+    top: 0;
+    width: 74px;
+    height: 32px;
+    left: 0;
+    border-radius: 15px 0 24px 0;
+    font-size: 13px;
+}

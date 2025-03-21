@@ -1,0 +1,63 @@
+<mat-dialog-content>
+    <div class="card-header mb-3">
+        <div class="d-flex justify-content-between">
+            <div class="fw-medium fs-2">
+                Bài đăng của bạn (6)
+            </div>
+            <span matDialogClose class="cursor-pointer">
+                <i class="fa-solid fa-close fs-1"></i>
+            </span>
+        </div>
+
+    </div>
+    <div class="separator border-gray-200"></div>
+
+    <div class="card-body my-3">
+        <div class="row">
+            @for (post of data; track post) {
+            <div class="col-xxl-4 mb-3">
+                <div class="card">
+                    <div class="card-header px-3">
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-45px me-4 symbol-circle">
+                                <img [src]="post.user.avatar_url" onerror="this.src='./assets/media/avatars/blank.png'" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start flex-column">
+                            <span href="#"
+                                  class="text-gray-800 fw-bolder text-hover-primary fs-6">{{post.user.name}}</span>
+                                <span class="text-muted text-muted d-block fs-7">{{post.last_synced_at | transferHour}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-3">
+                        <p class="text-truncate-custom fs-6 fw-light">
+                            {{post.description}}
+                        </p>
+                        <div class="separator border-gray-200"></div>
+                        <div class="d-flex align-items-center mt-3 gap-6">
+                            <div>
+                                <img [src]="'./assets/media/icons/fb/like.png'" alt="" class="w-15px">
+                                <img [src]="'./assets/media/icons/fb/wow.png'" alt="" class="w-15px">
+                                <span class="fw-medium ms-1 fs-6">{{post.like_count | formatNumber}}</span>
+                            </div>
+<!--                            <div>-->
+<!--                                <img src="./assets/media/icons/fb/wow.png" alt="" class="w-15px">-->
+<!--                                <span class="fw-medium ms-1 fs-6">124</span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <img src="./assets/media/icons/fb/haha.png" alt="" class="w-15px">-->
+<!--                                <span class="fw-medium ms-1 fs-6">54</span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <img src="./assets/media/icons/fb/hear.png" alt="" class="w-15px">-->
+<!--                                <span class="fw-medium ms-1 fs-6">99</span>-->
+<!--                            </div>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,12 @@
+.menu {
+    li {
+        border-right: 1px solid #D9D9D9;
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.footer-logo {
+    margin-right: 15px;
+}

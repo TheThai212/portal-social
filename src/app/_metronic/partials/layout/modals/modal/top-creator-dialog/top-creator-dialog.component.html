@@ -1,0 +1,122 @@
+<mat-dialog-content>
+    <div class="card-header mb-4">
+        <div class="d-flex justify-content-between">
+            <div class="fw-medium">
+                TOP VPS Creator
+            </div>
+            <span matDialogClose class="cursor-pointer">
+                <i class="fa-solid fa-close fs-1"></i>
+            </span>
+        </div>
+    </div>
+    <div class="separator border-gray-200"></div>
+    <div class="my-4 btn-grp">
+        <button type="button" class="btn btn-outline-secondary btn-sm me-3" [ngClass]="isReaction ? 'active' : ''"
+                (click)="getTopReaction()">
+            Top reaction
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" [ngClass]="!isReaction ? 'active' : ''"
+                (click)="getTopShare()">
+            Top share
+        </button>
+    </div>
+    <div class="card" *ngIf="isReaction">
+        <div class="card-header align-items-center">
+            <div class="me-6">
+                <i class="fa-solid fa-thumbs-up me-1 fs-5 text-primary"></i>
+                <span class="text-gray-700 ms-2 fw-bolder">Top reaction</span>
+            </div>
+            <span>Số reaction</span>
+        </div>
+        <div class="card-body pt-0">
+            <div class="mt-4">
+                @for (item of listLikeTop; track item; let i = $index) {
+                    <div class="d-flex justify-content-between align-items-center mb-6">
+                        <div class="">
+                            <span class="fw-semibold fs-lg fw-bold ms-3 me-3">{{ i + 1 }}.</span>
+                            <div class="symbol symbol-circle symbol-45px">
+                                <img [src]="item.avatar_url" onerror="this.src='./assets/media/avatars/blank.png'" alt="">
+                            </div>
+                            <span class="fw-semibold fs-lg ms-4">{{ item.name }}</span>
+                        </div>
+                        <div>
+                        <span class="fw-bold text-gray-800" *ngIf="!!item?.max_likes">
+                            {{ item.max_likes | number : '0.0-0' }}
+                        </span>
+                            <span class="fw-bold text-gray-800" *ngIf="!item?.max_likes">---</span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="separator border-gray-200"></div>
+            <div class="mt-4" *ngIf="user$ | async as _user">
+                <div class="d-flex justify-content-between align-items-center my-6">
+                    <div class="">
+                        <span class="fw-semibold fs-lg fw-bold ms-3 me-3">---</span>
+                        <div class="symbol symbol-circle symbol-45px">
+                            <img [src]="_user.avatar_url" onerror="this.src='./assets/media/avatars/blank.png'" alt="">
+                        </div>
+                        <span class="fw-semibold fs-lg ms-4">{{ _user.name }}</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold text-gray-800" *ngIf="!!meStats?.max_likes">
+                            {{ meStats?.max_likes | number : '0.0-0' }}
+                        </span>
+                        <span class="fw-bold text-gray-800" *ngIf="!meStats?.max_likes">---</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="!isReaction">
+        <div class="card-header align-items-center">
+            <div class="me-6">
+                <i class="fa-solid fa-thumbs-up me-1 fs-5 text-primary"></i>
+                <span class="text-gray-700 ms-2 fw-bolder">Top share</span>
+            </div>
+            <span>Số share</span>
+        </div>
+        <div class="card-body pt-0">
+            <div class="mt-4">
+                @for (item of listShareTop; track item; let i = $index) {
+                    <div class="d-flex justify-content-between align-items-center mb-6">
+                        <div class="">
+                            <span class="fw-semibold fs-lg fw-bold ms-3 me-3">{{ i + 1 }}.</span>
+                            <div class="symbol symbol-circle symbol-45px">
+                                <img [src]="item.avatar_url" onerror="this.src='./assets/media/avatars/blank.png'" alt="">
+                            </div>
+                            <span class="fw-semibold fs-lg ms-4">{{ item.name }}</span>
+                        </div>
+                        <div>
+                                <span class="fw-bold text-gray-800" *ngIf="!!item?.max_shares">
+                                    {{item?.max_shares | number : '0.0-0'}}
+                                </span>
+                            <span class="fw-bold text-gray-800" *ngIf="!item?.max_shares">
+                                    ---
+                                </span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="separator border-gray-200"></div>
+            <div class="mt-4" *ngIf="user$ | async as _user">
+                <div class="d-flex justify-content-between align-items-center my-6">
+                    <div class="">
+                        <span class="fw-semibold fs-lg fw-bold ms-3 me-3">---</span>
+                        <div class="symbol symbol-circle symbol-45px">
+                            <img [src]="_user.avatar_url" onerror="this.src='./assets/media/avatars/blank.png'" alt="">
+                        </div>
+                        <span class="fw-semibold fs-lg ms-4">{{_user.name}}</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold text-gray-800" *ngIf="!!meStats?.max_shares">
+                            {{meStats?.max_shares | number : '0.0-0'}}
+                        </span>
+                        <span class="fw-bold text-gray-800" *ngIf="!meStats?.max_shares">---</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
