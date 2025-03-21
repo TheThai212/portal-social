@@ -137,11 +137,9 @@ export class EncryptionService {
             const key = CryptoJS.enc.Hex.parse(this.aesKey);
             const iv = CryptoJS.enc.Hex.parse(this.generateIV());
 
-            const encrypted = CryptoJS.AES.encrypt(jsonStr, key, {
-                mode: CryptoJS.mode.CBC,
-                padding: CryptoJS.pad.Pkcs7,
-                iv: iv
-            });
+            const encrypted = CryptoJS.AES.encrypt(jsonStr, this.aesKey);
+
+            console.log(CryptoJS.AES.encrypt('my message', 'secret key 123').toString());
 
             const encryptedKey = this.jsEncrypt.encrypt(this.aesKey);
 
