@@ -127,7 +127,7 @@ export class EncryptionService {
     private generateNewAesKey(): void {
         this.aesKey = CryptoJS.lib.WordArray.random(256/8).toString();
 
-        
+
         console.log(this.aesKey);
     }
 
@@ -143,10 +143,10 @@ export class EncryptionService {
             const iv = this.generateIV();
 
     //         const jsonText = JSON.stringify(data);
-    
+
     // // Chuyển IV từ string sang WordArray
     // const ivWordArray = CryptoJS.enc.Hex.parse(iv);
-    
+
     // // Chuyển key thành WordArray
     // const keyWordArray = CryptoJS.enc.Utf8.parse(this.aesKey);
 
@@ -159,7 +159,7 @@ export class EncryptionService {
 
 
     const jsonStr = JSON.stringify(data);
-    
+
     const key = CryptoJS.enc.Hex.parse(this.aesKey);
     const ivParams = CryptoJS.enc.Hex.parse(iv);
 
@@ -181,46 +181,14 @@ export class EncryptionService {
         iv: iv2
     });
 
-    console.log(`encryptedJson`, encryptedJson.toString()); // Chuỗi Base64 đã mã hóa
-
-
-    // console.log(encrypted.toString());debugger;
-
-
-            
-
+            console.log(`encryptedJson`, encryptedJson.toString()); // Chuỗi Base64 đã mã hóa
             console.log(JSON.stringify(data));
 
             console.log(btoa(data));
             console.log(atob(btoa(data)));
 
-            // Mã hóa dữ liệu với AES-256-CBC và IV
-            // const encryptedData = CryptoJS.AES.encrypt(
-            //     btoa(data),
-            //     this.aesKey,
-            //     {
-            //         mode: CryptoJS.mode.CBC,
-            //         padding: CryptoJS.pad.Pkcs7,
-            //         iv: CryptoJS.enc.Hex.parse(iv)
-            //     }
-            // ).toString();
-
-            // const encryptedResult = this.jsEncrypt.encrypt(this.aesKey);
-            // let encryptedStr = '';
-            // if (encryptedResult && typeof encryptedResult === 'string') {
-            //     encryptedStr = btoa(encryptedResult);
-            //     console.log('key', this.aesKey);
-            //     console.log('encrypted', encryptedStr);
-                
-            //     const decryptedStr = this.jsEncrypt.decrypt(atob(encryptedStr));
-            //     console.log('decrypted', decryptedStr);
-            // } else {
-            //     console.error('Không thể mã hóa AES key');
-            // }
-
             const decryptedData = CryptoJS.AES.decrypt(encrypted.toString(), this.aesKey);
-            // const parsedData = JSON.parse(atob(decryptedData.toString(CryptoJS.enc.Utf8)));
-            
+
             return {
                 data: encryptedJson.toString(),
                 iv: iv2,  // Thêm IV vào response
@@ -239,7 +207,6 @@ export class EncryptionService {
 
     public decryptPayload(encryptedData: string, aesKey: string, iv: string): any {
         try {
-            // Giải mã dữ liệu với AES-256-CBC và IV
             const decryptedBytes = CryptoJS.AES.decrypt(
                 encryptedData,
                 aesKey,
@@ -249,10 +216,9 @@ export class EncryptionService {
                     iv: CryptoJS.enc.Hex.parse(iv)
                 }
             );
-            
-            // Chuyển đổi kết quả giải mã sang chuỗi UTF-8
+
             const decryptedText = atob(decryptedBytes.toString(CryptoJS.enc.Utf8));
-            
+
             // Parse chuỗi JSON
             return (decryptedText);
         } catch (error) {
