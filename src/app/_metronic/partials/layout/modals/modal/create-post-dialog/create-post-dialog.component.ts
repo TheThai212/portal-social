@@ -19,6 +19,7 @@ export class CreatePostDialogComponent implements OnInit {
 
     data: string;
 
+    jsonStr: string = '';
     constructor(
         private topPostService: TopPostsService,
         private dialogRef: MatDialogRef<CreatePostDialogComponent>
@@ -34,7 +35,34 @@ export class CreatePostDialogComponent implements OnInit {
         if (this.data) {
             this.topPostService.createPost(payload).subscribe(resp => {
                 if (resp.status === "success") {
-                    this.dialogRef.close();
+
+                    this.jsonStr = JSON.stringify(resp.data, null, 2);
+
+                    // this.dialogRef.close();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        toast: true,
+                        title: "Đăng bài lên web thành công",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+        }
+    }
+
+    createPost2() {
+        const payload = {
+            post_url: this.data
+        };
+
+        if (this.data) {
+            this.topPostService.createPost2(payload).subscribe(resp => {
+                if (resp.status === "success") {
+
+                    this.jsonStr = JSON.stringify(resp.data, null, 2);
+                    // this.dialogRef.close();
                     Swal.fire({
                         position: "top-end",
                         icon: "success",

@@ -72,6 +72,8 @@ export class EncryptionService {
     }
 
     private generateIV(): string {
+
+        return '9bbdd6c68d3df3adfb062c8f0ec2c677';
         return CryptoJS.lib.WordArray.random(16).toString();
     }
 
@@ -79,9 +81,20 @@ export class EncryptionService {
         try {
             const jsonStr = JSON.stringify({ dataJson: data });
             const key = CryptoJS.enc.Hex.parse(this.aesKey);
+            // const iv = CryptoJS.enc.Hex.parse(this.generateIV());
             const iv = CryptoJS.enc.Hex.parse(this.generateIV());
 
-            const encrypted = CryptoJS.AES.encrypt(jsonStr, this.aesKey);
+            const encrypted = CryptoJS.AES.encrypt(jsonStr, key, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+
+            // TODO: UNCOMMENT THIS LIKE
+            // const encrypted =  CryptoJS.AES.encrypt(jsonStr, this.aesKey);
+
+
             const encryptedKey = this.jsEncrypt.encrypt(this.aesKey);
 
             return {
@@ -117,6 +130,38 @@ export class EncryptionService {
         } catch (error) {
             console.error('Lỗi giải mã:', error);
             return null;
+        }
+    }
+
+    public decryptResponse(response: { data: string;}): any {
+        try {
+
+            // Giải mã dữ liệu với AES key đã được giải mã
+            const key = CryptoJS.enc.Hex.parse(this.aesKey);
+            const iv = CryptoJS.enc.Hex.parse('9bbdd6c68d3df3adfb062c8f0ec2c677');
+
+
+            console.log('=====response.data', response.data);
+
+            const decryptedBytes = CryptoJS.AES.decrypt(
+                response.data,
+                key,
+                {
+                    mode: CryptoJS.mode.CBC,
+                    padding: CryptoJS.pad.Pkcs7,
+                    iv: iv
+                }
+            );
+
+            // TODO: UNCOMMENT THIS LINE
+            // const decryptedBytes = CryptoJS.AES.decrypt(response.data, this.aesKey);
+
+            const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+            console.log('=====response.data', decryptedText);
+            return JSON.parse(decryptedText);
+        } catch (error) {
+            console.error('Lỗi khi giải mã response:', error);
+            throw error;
         }
     }
 }

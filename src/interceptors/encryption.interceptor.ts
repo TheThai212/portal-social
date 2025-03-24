@@ -3,9 +3,10 @@ import {
     HttpRequest,
     HttpHandler,
     HttpEvent,
-    HttpInterceptor
+    HttpInterceptor,
+    HttpResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { EncryptionService } from '../services/encryption.service';
 
 @Injectable()
@@ -41,10 +42,41 @@ export class EncryptionInterceptor implements HttpInterceptor {
             request = modifiedRequest;
         }
 
-        return next.handle(request);
+        return next.handle(request).pipe(
+            map((event: HttpEvent<any>) => {
+                if (event instanceof HttpResponse) {
+                    const body = event.body;
+                    console.log('==============body', body);
+
+                    if (this.isEncryptedResponse(body)) {
+                        try {
+                            const decryptedBody = this.encryptionService.decryptResponse({
+                                data: body
+                            });
+
+                            return event.clone({ body: decryptedBody });
+                        } catch (error) {
+                            console.error('Lỗi giải mã response:', error);
+                            return event;
+                        }
+                    }
+                }
+                return event;
+            })
+        );
     }
 
     private isExcludedUrl(url: string): boolean {
         return this.excludedUrls.some(excludedUrl => url.includes(excludedUrl));
+    }
+
+    public isEncryptedResponse(response: any): boolean {
+
+        return true;
+        return response &&
+               typeof response === 'object' &&
+               'data' in response &&
+               'iv' in response &&
+               'key' in response;
     }
 }
